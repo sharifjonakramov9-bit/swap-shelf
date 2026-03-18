@@ -18,12 +18,20 @@ class UserManager(BaseUserManager):
         )
         user.set_password(password)
         user.save(using=self._db)
+        return user
     
     def create_superuser(self, telegram_id, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault("is_active", True)
         
         return self.create_user(telegram_id, password, **extra_fields)
+    
+    def get_by_natural_key(self, username):
+        try:
+            return self.get(**{self.model.USERNAME_FIELD: int(username)})
+        except (ValueError, TypeError, self.model.DoesNotExist):
+            raise self.model.DoesNotExist
 
 
 class User(AbstractUser):
