@@ -25,6 +25,7 @@ Menu_Keyboard = [
 ]
 
 def start(update: Update, context: CallbackContext):
+    
     update.message.reply_text('Salom, botga xush kelibsiz!')
     
 
