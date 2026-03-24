@@ -37,7 +37,7 @@ class Book(models.Model):
     )
     type = models.CharField(choices=BookType.choices, default=BookType.BORROW)
     description = models.CharField(max_length=999, blank=False)
-    image = models.URLField()
+    image = models.URLField(blank=True, null=True)
     status = models.CharField(choices=BookStatus.choices, default=BookStatus.AVAILABLE)
     share = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
