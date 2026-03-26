@@ -6,6 +6,10 @@ import re
 
 from .models import User
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "username", "name", "phone", "rating"]
 
 class LoginSerializer(serializers.Serializer):
     phone_number = serializers.CharField()
