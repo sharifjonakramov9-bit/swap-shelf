@@ -14,11 +14,24 @@ class Book(models.Model):
     author = models.CharField(max_length=64)
     genre = models.ForeignKey(Genre, related_name="books", on_delete=models.PROTECT)
     condition = models.CharField(
-        choices=BookCondition.choices, default=BookCondition.GOOD
+        max_length=16, choices=BookCondition.choices, default=BookCondition.GOOD
     )
-    type = models.CharField(choices=BookType.choices, default=BookType.BORROW)
+    type = models.CharField(
+        max_length=16, choices=BookType.choices, default=BookType.BORROW
+    )
     description = models.CharField(max_length=999, blank=False)
+    image = models.URLField()
+    status = models.CharField(
+        max_length=16, choices=BookStatus.choices, default=BookStatus.AVAILABLE
+    )
     image = models.URLField(blank=True, null=True)
     status = models.CharField(choices=BookStatus.choices, default=BookStatus.AVAILABLE)
     share = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.title} - {self.author}"
     created_at = models.DateTimeField(auto_now_add=True)
